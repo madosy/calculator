@@ -39,7 +39,7 @@ body{
     justify-content: end;
     align-items: end;
     padding: 0 10px;
-    font-size: 50px;
+    font-size:calc(30px + 1.5vw);
     font-weight: 100;
 }
 
@@ -83,7 +83,7 @@ body{
     align-items: center;
     border-bottom: 1px solid #504f53;
     border-right: 1px solid #504f53;
-    font-size: 30px;
+    font-size: calc(20px + 1vw);;
     font-weight: bold;
     user-select: none;
     -webkit-user-select: none;
