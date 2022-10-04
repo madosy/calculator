@@ -1,5 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+*{
+    box-sizing: border-box;
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+    font-family: 'Roboto', sans-serif;
+}
 .calc-container {
-    background-color: blue;
+    /* background-color: blue; */
     position: relative;
     margin: auto;
     display:flex;
@@ -8,22 +17,26 @@
     align-items: center;
     width: 400px;
     height: 500px;
+    border-radius: 12px;
+    border-width: 0 2px 0px 2px;
+    border-style: solid;
+    border-color: #52514e;
 }
 
 .input-container{
-    background-color: white;
+    background-color: #52514e;
     display: inline-block;
-
-    width: 80%;
-    height: 20%;
+    border-radius: 10px 10px 0 0;
+    width: 100%;
+    height: 25%;
 }
 
 .button-container{
-    background-color: lightblue;
+    /* background-color: lightblue; */
     display:flex;
     justify-content: space-between;
-    width: 80%;
-    height: 60%;
+    width: 100%;
+    height: 75%;
 }
 
 .num.button-container,
@@ -36,28 +49,49 @@
 }
 
 .num{
-    background-color: blueviolet;
+    /* background-color: blueviolet; */
     width: 75%;
     height: 100%;
 }
 
 .op {
-    background-color: brown;
-    width:20%;
+    /* background-color: brown; */
+    flex-direction: column;
+    width: 25%;
     height: 100%;
 }
 
 .button{
     display: inline-block;
-    width: 65px;
-    height: 60px;
-    background-color: yellowgreen;
+    width: 33.3%;
+    height: 20%;
+    background-color: darkgray;
     display: flex;
     justify-content: center;
     align-items: center;
+    border-bottom: 2px solid #52514e;
+    border-right: 2px solid #52514e;
+
 }
 
 .op > .button {
-    width: 40px;
-    height: 40px;
+    width: 100%;
+    background-color: orange;
+    border-right: 0;
+}
+
+.mod.button{
+    background-color: gray;
+}
+
+.button.wide {
+    width: 66.6%;
+}
+
+.right-corner {
+    border-radius: 0 0 10px 0;
+}
+
+.left-corner{
+    border-radius: 0 0 0 10px;
 }
