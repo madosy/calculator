@@ -85,6 +85,8 @@ body{
     border-right: 1px solid #504f53;
     font-size: 30px;
     font-weight: bold;
+    user-select: none;
+    -webkit-user-select: none;
 }
 .button:active {
     background-color: #b0b0b2;
