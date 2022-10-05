@@ -42,6 +42,12 @@ function appendInput(a) {
 var numButtons = document.querySelectorAll('div.num.button')
 numButtons.forEach((button) => {
     button.addEventListener('click', ()=>appendInput(button.textContent))
+    button.addEventListener('click', ()=>{
+        if (condition) {
+            updateDisplay(button.textContent)
+            condition = false;
+        }
+    })
 })
 
 var modButtons = document.querySelectorAll('div.mod.button')
@@ -49,4 +55,20 @@ var modButton_clear = modButtons[0].addEventListener('click', ()=>updateDisplay(
 var modButton_invert = modButtons[1].addEventListener('click', ()=>updateDisplay(getInput()*(-1)))
 var modButton_percent = modButtons[2].addEventListener('click', ()=>updateDisplay(getInput()/100))
 
-// var opButtons = document.querySelectorAll('div.op > div.button')
+var opButtons = document.querySelectorAll('div.op > div.button')
+
+let valArr = [];
+function storeValue(a) {
+    if (valArr.length < 1) valArr[0]= a
+    else valArr[1] = a
+}
+
+let operator = ''
+condition = false
+opButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+        operator = button.textContent
+        storeValue(getInput())
+        condition = true
+    })
+})
