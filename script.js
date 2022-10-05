@@ -18,6 +18,10 @@ const divide = function(a,b) {
 var inputElement = document.querySelector('.input-container');
 var decimalPresent = false;
 
+function updateDisplay(a) {
+    inputElement.textContent = a
+}
+
 //grab input text
 function getInput() {
     var inputNum = parseFloat(inputElement.textContent)
@@ -27,6 +31,15 @@ function getInput() {
 function appendInput(a) {
     if (a=='.' && inputElement.textContent.indexOf('.') != -1){
         return
+    } else if (a!="." && inputElement.textContent == '0'){
+        updateDisplay(a)
+        return
     }
     inputElement.textContent += a
 }
+
+//grab all num buttons
+var numButtons = document.querySelectorAll('div.num.button')
+numButtons.forEach((button) => {
+    button.addEventListener('click', ()=>appendInput(button.textContent))
+})
