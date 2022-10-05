@@ -16,6 +16,7 @@ const divide = function(a,b) {
 }
 
 var inputElement = document.querySelector('.input-container');
+var decimalPresent = false;
 
 //grab input text
 function getInput() {
@@ -24,5 +25,8 @@ function getInput() {
 }
 
 function appendInput(a) {
+    if (a=='.' && inputElement.textContent.indexOf('.') != -1){
+        return
+    }
     inputElement.textContent += a
 }
