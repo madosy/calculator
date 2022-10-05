@@ -43,3 +43,10 @@ var numButtons = document.querySelectorAll('div.num.button')
 numButtons.forEach((button) => {
     button.addEventListener('click', ()=>appendInput(button.textContent))
 })
+
+var modButtons = document.querySelectorAll('div.mod.button')
+var modButton_clear = modButtons[0].addEventListener('click', ()=>updateDisplay('0'))
+var modButton_invert = modButtons[1].addEventListener('click', ()=>updateDisplay(getInput()*(-1)))
+var modButton_percent = modButtons[2].addEventListener('click', ()=>updateDisplay(getInput()/100))
+
+// var opButtons = document.querySelectorAll('div.op > div.button')
