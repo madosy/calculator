@@ -15,8 +15,14 @@ const divide = function(a,b) {
     return parseFloat(a) / parseFloat(b)
 }
 
+var inputElement = document.querySelector('.input-container');
+
 //grab input text
 function getInput() {
-    var inputNum = parseFloat(document.querySelector('.input-container').textContent)
+    var inputNum = parseFloat(inputElement.textContent)
     return inputNum
+}
+
+function appendInput(a) {
+    inputElement.textContent += a
 }
