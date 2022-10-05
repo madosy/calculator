@@ -14,3 +14,9 @@ const multiply = function(a,b) {
 const divide = function(a,b) {
     return parseFloat(a) / parseFloat(b)
 }
+
+//grab input text
+function getInput() {
+    var inputNum = parseFloat(document.querySelector('.input-container').textContent)
+    return inputNum
+}
