@@ -51,7 +51,11 @@ numButtons.forEach((button) => {
 })
 
 var modButtons = document.querySelectorAll('div.mod.button')
-var modButton_clear = modButtons[0].addEventListener('click', ()=>updateDisplay('0'))
+var modButton_clear = modButtons[0].addEventListener('click', ()=>{
+    updateDisplay('0')
+    valArr = [];
+    operator = '';
+})
 var modButton_invert = modButtons[1].addEventListener('click', ()=>updateDisplay(getInput()*(-1)))
 var modButton_percent = modButtons[2].addEventListener('click', ()=>updateDisplay(getInput()/100))
 
@@ -67,8 +71,51 @@ let operator = ''
 condition = false
 opButtons.forEach((button) => {
     button.addEventListener('click', () => {
-        operator = button.textContent
+        if (valArr.length == 2) operate(operator)
+        if (button.textContent != '=') operator = button.textContent
+        console.log(operator)
         storeValue(getInput())
         condition = true
     })
 })
+
+opButtons[4].removeEventListener('click', () => {
+    operator = button.textContent
+    storeValue(getInput())
+    condition = true
+})
+
+opButtons[4].addEventListener('click', () => {
+    operate(operator)
+    valArr=[]
+})
+
+function operate(operator){
+    a = valArr[0]
+    b = valArr[1]
+    if (operator == '+'){
+        var result = add(a,b)
+    } else if (operator == '−') {
+        var result = subtract(a,b)
+    } else if (operator == '×') {
+        var result = multiply(a,b)
+    } else if (operator == '÷') {
+        var result = divide(a,b)
+    }
+    if (operator != '='){
+        savePop(result)
+    }
+    updateDisplay(result)
+}
+
+function savePop(result) {
+    valArr[0] = result;
+    valArr.pop();
+}
+
+
+/* if I click an operator and I don't have a stored value, store to 1st spot.*/
+/* if I click an operator and I have a first value, but not a 2nd value, store to 2nd spot*/
+/* if I click an operator and I have a first and a 2nd value, run the operation based on operator then store the new operator*/
+    /*if the operator clicked was '=', don't do anything to the stored array*/
+    /*if the operator clicked was other operators, store the result to first value, and pop off the 2nd value*/
