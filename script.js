@@ -43,9 +43,9 @@ var numButtons = document.querySelectorAll('div.num.button')
 numButtons.forEach((button) => {
     button.addEventListener('click', ()=>appendInput(button.textContent))
     button.addEventListener('click', ()=>{
-        if (condition) {
+        if (clearDisplay) {
             updateDisplay(button.textContent)
-            condition = false;
+            clearDisplay = false;
         }
     })
 })
@@ -68,31 +68,40 @@ function storeValue(a) {
 }
 
 let operator = ''
-condition = false
-opButtons.forEach((button) => {
-    button.addEventListener('click', () => {
-        if (valArr.length == 2) operate(operator)
-        if (button.textContent != '=') operator = button.textContent
-        console.log(operator)
-        storeValue(getInput())
-        condition = true
-    })
-})
+clearDisplay = false
+// opButtons.forEach((button) => {
+//     button.addEventListener('click', () => {
+//         console.log(operator)
+//         storeValue(getInput())
+//         if (valArr.length > 1) operate(operator)
+//         if (button.textContent != '=') operator = button.textContent
+        
+//         condition = true
+//     })
+// })
 
-opButtons[4].removeEventListener('click', () => {
-    operator = button.textContent
-    storeValue(getInput())
-    condition = true
-})
+for (let index = 0; index < (opButtons.length -1); index++) {
+    opButtons[index].addEventListener('click', () => {
+        storeValue(getInput())
+        if (valArr.length > 1) {
+            result = operate(operator)
+            savePop(result)
+            updateDisplay(result)
+        }
+        operator = opButtons[index].textContent
+        clearDisplay = true;
+    })
+}
 
 opButtons[4].addEventListener('click', () => {
-    operate(operator)
-    valArr=[]
+    // operate(operator)
+    // valArr=[]
 })
 
 function operate(operator){
     a = valArr[0]
     b = valArr[1]
+
     if (operator == '+'){
         var result = add(a,b)
     } else if (operator == '−') {
@@ -102,10 +111,7 @@ function operate(operator){
     } else if (operator == '÷') {
         var result = divide(a,b)
     }
-    if (operator != '='){
-        savePop(result)
-    }
-    updateDisplay(result)
+    return result;
 }
 
 function savePop(result) {
