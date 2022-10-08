@@ -82,7 +82,7 @@ clearDisplay = false
 
 for (let index = 0; index < (opButtons.length -1); index++) {
     opButtons[index].addEventListener('click', () => {
-        storeValue(getInput())
+        if (equalityPressed == false) storeValue(getInput())
         if (valArr.length > 1) {
             result = operate(operator)
             savePop(result)
@@ -90,11 +90,18 @@ for (let index = 0; index < (opButtons.length -1); index++) {
         }
         operator = opButtons[index].textContent
         clearDisplay = true;
+        equalityPressed = false;
     })
 }
 
+equalityPressed = false;
 opButtons[4].addEventListener('click', () => {
-    // operate(operator)
+    equalityPressed = true;
+    storeValue(getInput())
+    if (valArr.length > 1) {
+        result = operate(operator)
+        updateDisplay(result)
+    }
     // valArr=[]
 })
 
