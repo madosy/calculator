@@ -44,8 +44,10 @@ function appendInput(a) {
 var modButtons = document.querySelectorAll('div.mod.button')
 var modButton_clear = modButtons[0].addEventListener('click', ()=>{
     updateDisplay('0')
-    valArr = [];
-    operator = '';
+    fv_bool = false;
+    sv_bool = false;
+    fo_bool = false;
+    so_bool = false;
 })
 var modButton_invert = modButtons[1].addEventListener('click', ()=>updateDisplay(getInput()*(-1)))
 var modButton_percent = modButtons[2].addEventListener('click', ()=>updateDisplay(getInput()/100))
