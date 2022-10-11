@@ -67,7 +67,6 @@ var modButton_clear = modButtons[0].addEventListener('click', ()=>{
 var modButton_invert = modButtons[1].addEventListener('click', ()=>updateDisplay(getInput()*(-1)))
 var modButton_percent = modButtons[2].addEventListener('click', ()=>updateDisplay(getInput()/100))
 
-
 let first_val = ''
 let fv_bool = false;
 let first_op = ''
@@ -83,18 +82,19 @@ numButtons.forEach((button) => {
 
     //num functionality:
     button.addEventListener('click', () => {
-        if (fv_bool && fo_bool && so_bool && sv_bool) {
+        if (fv_bool && fo_bool && so_bool && sv_bool) { /*pressing num key after equals*/
             fv_bool = false;
             sv_bool = false;
             fo_bool = false;
             so_bool = false;
             updateDisplay('')
-        }else if (fv_bool && fo_bool == false) {
+        } else if (fv_bool && fo_bool == false) { /*pressing num key after first operator*/
             console.log(tempOperator)
             first_op = tempOperator;
             fo_bool = true;
             updateDisplay('')
-        } else if (so_bool) {
+        } 
+        else if (so_bool) { /*pressing num key after non-equal second operator*/
             first_op = tempOperator;
             fo_bool = true;
             updateDisplay('')
@@ -112,21 +112,20 @@ for (let index = 0; index < (opButtons.length -1); index++) {
     opButtons[index].addEventListener('click', () => {
 
         //operator functionality:
-        if (fv_bool && fo_bool && sv_bool && so_bool){
+        if (fv_bool && fo_bool && sv_bool && so_bool){ /*pressing operator after equal*/
             first_val = getInput();
             fo_bool = false;
             sv_bool = false;
             so_bool = false;
-        }else if (fv_bool && fo_bool && so_bool == false) {
-            so_bool = true;
-            second_op = tempOperator;
+        } else if (fv_bool && fo_bool && so_bool == false) { /*pressing repeated operator key*/
             second_val = getInput();
             result = operate(first_op);
             updateDisplay(result);
             first_val = result;
-            fv_bool == true;
-            fo_bool == false;
-        } else if (fv_bool == false && so_bool == false) {
+            so_bool = true;
+            second_op = tempOperator; //not really used but just for tracking
+        } 
+        else if (fv_bool == false && so_bool == false) { /*pressing operator after first value*/
             first_val = getInput();
             fv_bool = true;
         }
@@ -139,6 +138,7 @@ for (let index = 0; index < (opButtons.length -1); index++) {
 const equalButton = opButtons[4];
 equalButton.addEventListener('click', ()=>{
     if (fv_bool && fo_bool && sv_bool == false) {
+        second_op = '='
         second_val = getInput();
         result = operate(first_op);
         updateDisplay(result);
