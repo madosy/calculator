@@ -4,10 +4,15 @@ const subtract = function(a,b) {return parseFloat(a) - parseFloat(b)}
 const multiply = function(a,b) {return parseFloat(a) * parseFloat(b)}
 const divide = function(a,b) {return parseFloat(a) / parseFloat(b)}
 
+
 function operate(operator){
     a = first_val
     b = second_val
     let result = 0
+
+    if (operator == '÷' && parseFloat(b) == 0){
+        return "Can't Divide by 0"
+    }
 
     if (operator == '+') result = add(a,b)
     else if (operator == '−') result = subtract(a,b)
@@ -20,7 +25,16 @@ function operate(operator){
 var inputElement = document.querySelector('.input-container');
 var decimalPresent = false;
 
+function numDigits(x) {
+    x = Number(String(x).replace(/[^0-9]/g, ''));
+    return Math.max(Math.floor(Math.log10(Math.abs(x))), 0) + 1;
+  }
+
 function updateDisplay(a) {
+    if (typeof a == 'number' && numDigits(a) > 10) {
+        inputElement.textContent = a.toPrecision(10)
+        return
+    }
     inputElement.textContent = a
 }
 
@@ -39,6 +53,7 @@ function appendInput(a) {
     }
     inputElement.textContent += a
 }
+
 
 //mod buttons
 var modButtons = document.querySelectorAll('div.mod.button')
@@ -68,7 +83,13 @@ numButtons.forEach((button) => {
 
     //num functionality:
     button.addEventListener('click', () => {
-        if (fv_bool && fo_bool == false) {
+        if (fv_bool && fo_bool && so_bool && sv_bool) {
+            fv_bool = false;
+            sv_bool = false;
+            fo_bool = false;
+            so_bool = false;
+            updateDisplay('')
+        }else if (fv_bool && fo_bool == false) {
             console.log(tempOperator)
             first_op = tempOperator;
             fo_bool = true;
@@ -91,7 +112,12 @@ for (let index = 0; index < (opButtons.length -1); index++) {
     opButtons[index].addEventListener('click', () => {
 
         //operator functionality:
-        if (fv_bool && fo_bool && so_bool == false) {
+        if (fv_bool && fo_bool && sv_bool && so_bool){
+            first_val = getInput();
+            fo_bool = false;
+            sv_bool = false;
+            so_bool = false;
+        }else if (fv_bool && fo_bool && so_bool == false) {
             so_bool = true;
             second_op = tempOperator;
             second_val = getInput();
@@ -116,8 +142,10 @@ equalButton.addEventListener('click', ()=>{
         second_val = getInput();
         result = operate(first_op);
         updateDisplay(result);
-        fv_bool = false;
-        fo_bool = false;
+        fv_bool = true;
+        fo_bool = true;
+        sv_bool = true;
+        so_bool = true;
     }
 
 })
