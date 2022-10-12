@@ -81,8 +81,14 @@ var numButtons = document.querySelectorAll('div.num.button')
 numButtons.forEach((button) => {
 
     //num functionality:
-    button.addEventListener('click', () => {
-        if (fv_bool && fo_bool && so_bool && sv_bool) { /*pressing num key after equals*/
+    button.addEventListener('click', () => numKeyLogic())
+
+    //DONOTTOUCH
+    button.addEventListener('click', ()=>appendInput(button.textContent))
+})
+
+function numKeyLogic() {
+    if (fv_bool && fo_bool && so_bool && sv_bool) { /*pressing num key after equals*/
             fv_bool = false;
             sv_bool = false;
             fo_bool = false;
@@ -100,11 +106,7 @@ numButtons.forEach((button) => {
             updateDisplay('')
             so_bool = false;
         }
-    })
-
-    //DONOTTOUCH
-    button.addEventListener('click', ()=>appendInput(button.textContent))
-})
+}
 
 let tempOperator = ''
 var opButtons = document.querySelectorAll('div.op > div.button')
@@ -156,7 +158,10 @@ document.addEventListener('keydown', (event) => {
     var code = event.code;
     // Alert the key name and key code on keydown
     // alert(`Key pressed ${name} \r\n Key code value: ${code}`);
-    if(!isNaN(name)) appendInput(name)
+    if(!isNaN(name)) {
+        numKeyLogic()
+        appendInput(name)
+    }
   }, false);
 
 // numButtons.forEach((button) => {
