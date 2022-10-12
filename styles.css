@@ -6,6 +6,12 @@
     font-family: 'Roboto', sans-serif;
 }
 
+p{
+    color: gray;
+    font-size: small;
+    text-align: center;
+}
+
 body{
     margin: 30px auto auto;
 }
@@ -87,6 +93,7 @@ body{
     font-weight: bold;
     user-select: none;
     -webkit-user-select: none;
+    transition: 0.09s;
 }
 .button:active {
     background-color: #b0b0b2;
@@ -102,6 +109,9 @@ body{
     border-right: 0;
 }
 .op > .button:active {
+    background-color: #cb7d04;
+}
+.op.button.pressed {
     background-color: #cb7d04;
 }
 

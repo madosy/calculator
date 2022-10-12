@@ -19,6 +19,8 @@ function operate(operator){
     else if (operator == '×') result = multiply(a,b)
     else if (operator == '÷') result = divide(a,b)
 
+    console.log(`${first_val} ${operator} ${second_val} = ${result}`)
+
     return result;
 }
 
@@ -83,9 +85,20 @@ numButtons.forEach((button) => {
     //num functionality:
     button.addEventListener('click', () => numKeyLogic())
 
+
     //DONOTTOUCH
     button.addEventListener('click', ()=>appendInput(button.textContent))
 })
+
+var allButtons = document.querySelectorAll('div.button')
+allButtons.forEach((button) => {
+    button.addEventListener('transitionend', removeTransition)
+})
+
+function removeTransition(e) {
+    this.classList.remove('pressed')
+    
+}
 
 function numKeyLogic() {
     if (fv_bool && fo_bool && so_bool && sv_bool) { /*pressing num key after equals*/
@@ -95,7 +108,7 @@ function numKeyLogic() {
             so_bool = false;
             updateDisplay('')
         } else if (fv_bool && fo_bool == false) { /*pressing num key after first operator*/
-            console.log(tempOperator)
+            // console.log(tempOperator)
             first_op = tempOperator;
             fo_bool = true;
             updateDisplay('')
@@ -114,27 +127,30 @@ for (let index = 0; index < (opButtons.length -1); index++) {
     opButtons[index].addEventListener('click', () => {
 
         //operator functionality:
-        if (fv_bool && fo_bool && sv_bool && so_bool){ /*pressing operator after equal*/
-            first_val = getInput();
-            fo_bool = false;
-            sv_bool = false;
-            so_bool = false;
-        } else if (fv_bool && fo_bool && so_bool == false) { /*pressing repeated operator key*/
-            second_val = getInput();
-            result = operate(first_op);
-            updateDisplay(result);
-            first_val = result;
-            so_bool = true;
-            second_op = tempOperator; //not really used but just for tracking
-        } 
-        else if (fv_bool == false && so_bool == false) { /*pressing operator after first value*/
-            first_val = getInput();
-            fv_bool = true;
-        }
+        opLogic()
 
     tempOperator = opButtons[index].textContent;
 
     })
+}
+
+function opLogic() {
+    if (fv_bool && fo_bool && sv_bool && so_bool) { /*pressing operator after equal*/
+        first_val = getInput();
+        fo_bool = false;
+        sv_bool = false;
+        so_bool = false;
+    } else if (fv_bool && fo_bool && so_bool == false) { /*pressing repeated operator key*/
+        second_val = getInput();
+        result = operate(first_op);
+        updateDisplay(result);
+        first_val = result;
+        so_bool = true;
+        second_op = tempOperator; //not really used but just for tracking
+    } else if (fv_bool == false && so_bool == false) { /*pressing operator after first value*/
+        first_val = getInput();
+        fv_bool = true;
+    } 
 }
 
 const equalButton = opButtons[4];
@@ -153,24 +169,59 @@ equalButton.addEventListener('click', ()=>{
 })
 
 
-document.addEventListener('keydown', (event) => {
-    var name = event.key;
-    var code = event.code;
-    // Alert the key name and key code on keydown
-    // alert(`Key pressed ${name} \r\n Key code value: ${code}`);
-    if(!isNaN(name)) {
-        numKeyLogic()
-        appendInput(name)
-    }
+// document.addEventListener('keydown', (event) => {
+//     var name = event.key;
+//     var code = event.code;
+//     // Alert the key name and key code on keydown
+//     // alert(`Key pressed ${name} \r\n Key code value: ${code}`);
+//     if(!isNaN(name)) {
+//         numKeyLogic()
+//         appendInput(name)
+//     }
 
-  }, false);
+//   }, false);
 
 window.addEventListener('keydown', (press)=>{
     var keyName = press.key;
-    console.log(keyName)
+    if (keyName == 'Enter') keyName = '='
     keyPressed = document.querySelector(`div[data-key="${keyName}"]`)
-    console.log(keyPressed)
+    
+    //highlight pressed key
+    if (keyPressed != null) {
+        keyPressed.classList.add("pressed")
+
+        if (keyPressed.classList.contains("num")) {
+            numKeyLogic()
+            appendInput(keyName)
+        }
+    }
+    // keyPressed.classList.add("pressed")
+
+    if (keyName != '=' && keyPressed != null && keyPressed.classList.contains("op")) {
+        opLogic()
+        tempOperator = convertOpKey(keyName)
+    }
+
+    if (keyName == '='){
+        if (fv_bool && fo_bool && sv_bool == false) {
+            second_op = '='
+            second_val = getInput();
+            result = operate(first_op);
+            updateDisplay(result);
+            fv_bool = true;
+            fo_bool = true;
+            sv_bool = true;
+            so_bool = true;
+        }
+    }
 })
+
+function convertOpKey(keyName) {
+    if (keyName == '*') return '×'
+    if (keyName == '/') return '÷'
+    if (keyName == '-') return '−'
+    if (keyName == '+') return '+'
+} 
 
 // numButtons.forEach((button) => {
 
