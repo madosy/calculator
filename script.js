@@ -162,7 +162,15 @@ document.addEventListener('keydown', (event) => {
         numKeyLogic()
         appendInput(name)
     }
+
   }, false);
+
+window.addEventListener('keydown', (press)=>{
+    var keyName = press.key;
+    console.log(keyName)
+    keyPressed = document.querySelector(`div[data-key="${keyName}"]`)
+    console.log(keyPressed)
+})
 
 // numButtons.forEach((button) => {
 

@@ -92,6 +92,10 @@ body{
     background-color: #b0b0b2;
 }
 
+.button.pressed {
+    background-color: #b0b0b2;
+}
+
 .op > .button {
     width: 100%;
     background-color: #ff9e0b;
