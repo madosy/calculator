@@ -77,6 +77,7 @@ let second_val = ''
 let sv_bool = false;
 let second_op = ''
 let so_bool = false;
+let backspaceAllow = false;
 
 //grab all num buttons
 var numButtons = document.querySelectorAll('div.num.button')
@@ -119,6 +120,7 @@ function numKeyLogic() {
             updateDisplay('')
             so_bool = false;
         }
+    backspaceAllow = true;
 }
 
 let tempOperator = ''
@@ -150,12 +152,14 @@ function opLogic() {
     } else if (fv_bool == false && so_bool == false) { /*pressing operator after first value*/
         first_val = getInput();
         fv_bool = true;
-    } 
+    }
+    backspaceAllow = false;
+
 }
 
-const equalButton = opButtons[4];
-equalButton.addEventListener('click', ()=>{
-    if (fv_bool && fo_bool && sv_bool == false) {
+function equalLogic() {
+    var displayLen = inputElement.textContent.length;
+    if (displayLen > 0 && fv_bool && fo_bool && sv_bool == false) {
         second_op = '='
         second_val = getInput();
         result = operate(first_op);
@@ -165,8 +169,11 @@ equalButton.addEventListener('click', ()=>{
         sv_bool = true;
         so_bool = true;
     }
+    backspaceAllow = false;
+}
 
-})
+const equalButton = opButtons[4];
+equalButton.addEventListener('click', equalLogic)
 
 window.addEventListener('keydown', (press)=>{
     var keyName = press.key;
@@ -184,22 +191,27 @@ window.addEventListener('keydown', (press)=>{
     }
     // keyPressed.classList.add("pressed")
 
+    if (keyName == "Backspace" && backspaceAllow) {
+        removeInput();
+    }
+
     if (keyName != '=' && keyPressed != null && keyPressed.classList.contains("op")) {
         opLogic()
         tempOperator = convertOpKey(keyName)
     }
 
     if (keyName == '='){
-        if (fv_bool && fo_bool && sv_bool == false) {
-            second_op = '='
-            second_val = getInput();
-            result = operate(first_op);
-            updateDisplay(result);
-            fv_bool = true;
-            fo_bool = true;
-            sv_bool = true;
-            so_bool = true;
-        }
+        equalLogic()
+        // if (fv_bool && fo_bool && sv_bool == false) {
+        //     second_op = '='
+        //     second_val = getInput();
+        //     result = operate(first_op);
+        //     updateDisplay(result);
+        //     fv_bool = true;
+        //     fo_bool = true;
+        //     sv_bool = true;
+        //     so_bool = true;
+        // }
     }
 })
 
@@ -212,7 +224,12 @@ function convertOpKey(keyName) {
 
 //backspace
 function removeInput(a) {
+    var currentDisplay = inputElement.textContent;
+    var num = 1
+    if (currentDisplay[0] == '-' && currentDisplay.length == 2) {
+        num = 2
+    }
     var displayNum = inputElement.textContent
-                        .substr(0,inputElement.textContent.length-1)
+                        .substr(0,inputElement.textContent.length-num)
     inputElement.textContent = displayNum;
 }
