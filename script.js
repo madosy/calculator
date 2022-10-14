@@ -168,19 +168,6 @@ equalButton.addEventListener('click', ()=>{
 
 })
 
-
-// document.addEventListener('keydown', (event) => {
-//     var name = event.key;
-//     var code = event.code;
-//     // Alert the key name and key code on keydown
-//     // alert(`Key pressed ${name} \r\n Key code value: ${code}`);
-//     if(!isNaN(name)) {
-//         numKeyLogic()
-//         appendInput(name)
-//     }
-
-//   }, false);
-
 window.addEventListener('keydown', (press)=>{
     var keyName = press.key;
     if (keyName == 'Enter') keyName = '='
@@ -223,30 +210,9 @@ function convertOpKey(keyName) {
     if (keyName == '+') return '+'
 } 
 
-// numButtons.forEach((button) => {
-
-//     //num functionality:
-//     button.addEventListener('click', () => {
-//         if (fv_bool && fo_bool && so_bool && sv_bool) { /*pressing num key after equals*/
-//             fv_bool = false;
-//             sv_bool = false;
-//             fo_bool = false;
-//             so_bool = false;
-//             updateDisplay('')
-//         } else if (fv_bool && fo_bool == false) { /*pressing num key after first operator*/
-//             console.log(tempOperator)
-//             first_op = tempOperator;
-//             fo_bool = true;
-//             updateDisplay('')
-//         } 
-//         else if (so_bool) { /*pressing num key after non-equal second operator*/
-//             first_op = tempOperator;
-//             fo_bool = true;
-//             updateDisplay('')
-//             so_bool = false;
-//         }
-//     })
-
-//     //DONOTTOUCH
-//     button.addEventListener('click', ()=>appendInput(button.textContent))
-// })
+//backspace
+function removeInput(a) {
+    var displayNum = inputElement.textContent
+                        .substr(0,inputElement.textContent.length-1)
+    inputElement.textContent = displayNum;
+}
